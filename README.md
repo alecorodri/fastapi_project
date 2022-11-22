@@ -1,6 +1,5 @@
 # Learning FastAPI
 
-
 ## Run Server
 
 1. uvicorn main:app --reload
