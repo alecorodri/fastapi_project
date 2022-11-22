@@ -8,7 +8,8 @@ app =  FastAPI(title='Proyecto para reseñar peliculas',
     description='En este proyecto seremos capaces de reseñar peliculas',
     version='1.0.0')
 
-
+if  __name__=="__main__":
+        uvicorn.run("main:app",port = 8000,reload = True)
 
 #User Model
 class User(BaseModel): #schemas
