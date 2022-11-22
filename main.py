@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+import uvicorn
+from pydantic import BaseModel
+
 
 app =  FastAPI(title='Proyecto para reseñar peliculas',
     description='En este proyecto seremos capaces de reseñar peliculas',
@@ -12,6 +15,10 @@ def startUp():
 def shutDown():
     print('Finalizando server')
 
+@app.post('/ruta2')
+def ruta2(user):
+    print(user)
+    return True
 
 @app.get('/')
 async def index():
