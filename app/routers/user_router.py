@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Depends
 from app.schemas import User, UserId
-
-
+from app.db.db import getDb
+from sqlalchemy.orm import Session
+from app.db import models
 
 router = APIRouter(
     prefix= "/user",
@@ -11,7 +12,9 @@ router = APIRouter(
 users = []
 
 @router.get('/')
-def getUsers():
+def getUsers(db: Session = Depends(getDb)):
+    data = db.query(models.User).all()
+    print(data)
     return users
 
 @router.post('/')
@@ -50,7 +53,7 @@ def updateUser(user_id: int, update_user: User):
             users[index]["id"] = update_user.dict()["id"]
             users[index]["name"] = update_user.dict()["name"]
             users[index]["lastName"] = update_user.dict()["lastName"]
-            users[index]["direction"] = update_user.dict()["direction"]
+            users[index]["address"] = update_user.dict()["address"]
             users[index]["telephone"] = update_user.dict()["telephone"]
             return {"answer": "User updated"}
     return {"answer": "User not updated"}

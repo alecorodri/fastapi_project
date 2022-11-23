@@ -8,9 +8,10 @@ class User(BaseModel): #schemas
     id: int
     name: str
     lastName: str
-    direction: Optional[str]
+    address: Optional[str]
     telephone: int
-    userCreation: datetime = datetime.now()
+    email: str
+    creation: datetime = datetime.now()
 
 class UserId(BaseModel):
     id: int

@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
 from app.routers import user_router
+from app.db.db import Base,engine
+
+def createTables():
+    Base.metadata.create_all(bind=engine)
+createTables()
 
 app =  FastAPI(title='FastAPI Demo',
     description='Learn FastAPI',
