@@ -10,17 +10,17 @@ router = APIRouter(
 
 users = []
 
-@router.get('/user')
+@router.get('/')
 def getUsers():
     return users
 
-@router.post('/user')
+@router.post('/')
 def userCreate(user:User):
     user = user.dict()
     users.append(user)
     return {"answer" : "User created"}
 
-@router.post('/user/{user_id}')
+@router.post('/{user_id}')
 def getUsers(user_id:int):
     for user in users:
         if user["id"] == user_id:
@@ -35,7 +35,7 @@ def getUser2(user_id:UserId):
             return {"user": user}
     return {"answer": "User not found"}
 
-@router.delete('/user/{user_id}')
+@router.delete('/{user_id}')
 def deleteUser(user_id:int):
     for index,user in enumerate(users):
         if user["id"] == user_id:
@@ -43,7 +43,7 @@ def deleteUser(user_id:int):
             return {"answer": "User deleted"}
     return {"answer": "User not found"}
 
-@router.put('/user/{user_id}')
+@router.put('/{user_id}')
 def updateUser(user_id: int, update_user: User):
     for index,user in enumerate(users):
         if user["id"] == user_id:

@@ -1,27 +1,22 @@
 from fastapi import FastAPI
 import uvicorn
-
+from app.routers import user_router
 
 app =  FastAPI(title='FastAPI Demo',
     description='Learn FastAPI',
     version='1.0.0')
 
+app.include_router(user_router.router)
 
-@app.on_event('startup')
-def startUp():
-    print('Iniciando server')
 
-@app.on_event('shutdown')
-def shutDown():
-    print('Finalizando server')
 
-@app.get('/')
-async def index():
-    return 'Hello World'
+# @app.on_event('startup')
+# def startUp():
+#     print('Iniciando server')
 
-@app.get('/about')
-async def about():
-    return 'About Page'
+# @app.on_event('shutdown')
+# def shutDown():
+#     print('Finalizando server')
 
 
 if  __name__=="__main__":
