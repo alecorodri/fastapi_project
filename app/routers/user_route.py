@@ -1,10 +1,14 @@
 from fastapi import APIRouter
+from app.schemas import User, UserId
+
 
 
 router = APIRouter(
     prefix= "/user",
     tags=["Users"]
 )
+
+users = []
 
 @router.get('/user')
 def getUsers():
