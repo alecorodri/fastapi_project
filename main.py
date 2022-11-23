@@ -4,8 +4,8 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
-app =  FastAPI(title='Proyecto para reseñar peliculas',
-    description='En este proyecto seremos capaces de reseñar peliculas',
+app =  FastAPI(title='FastAPI Demo',
+    description='Learn FastAPI',
     version='1.0.0')
 
 users = []
@@ -21,12 +21,33 @@ class User(BaseModel): #schemas
     telephone: int
     userCreation: datetime = datetime.now()
 
-@app.post('/user_create')
+class UserId(BaseModel):
+    id: int
+
+@app.get('/user')
+def getUsers():
+    return users
+
+@app.post('/user')
 def userCreate(user:User):
     user = user.dict()
-    print(user)
-    return True
+    users.append(user)
+    return {"answer" : "User created"}
 
+@app.post('/user/{user_id}')
+def getUsers(user_id:int):
+    for user in users:
+        if user["id"] == user_id:
+            return {"user": user}
+    return {"answer": "User not found"}
+
+
+@app.post('/get_user')
+def getUser2(user_id:UserId):
+    for user in users:
+        if user["id"] == user_id.id:
+            return {"user": user}
+    return {"answer": "User not found"}
 
 @app.on_event('startup')
 def startUp():
