@@ -57,7 +57,17 @@ def deleteUser(user_id:int):
             return {"answer": "User deleted"}
     return {"answer": "User not found"}
 
-
+@app.put('/user/{user_id}')
+def updateUser(user_id: int, update_user: User):
+    for index,user in enumerate(users):
+        if user["id"] == user_id:
+            users[index]["id"] = update_user.dict()["id"]
+            users[index]["name"] = update_user.dict()["name"]
+            users[index]["lastName"] = update_user.dict()["lastName"]
+            users[index]["direction"] = update_user.dict()["direction"]
+            users[index]["telephone"] = update_user.dict()["telephone"]
+            return {"answer": "User updated"}
+    return {"answer": "User not updated"}
 
 @app.on_event('startup')
 def startUp():
