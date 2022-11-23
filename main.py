@@ -49,6 +49,16 @@ def getUser2(user_id:UserId):
             return {"user": user}
     return {"answer": "User not found"}
 
+@app.delete('/user/{user_id}')
+def deleteUser(user_id:int):
+    for index,user in enumerate(users):
+        if user["id"] == user_id:
+            users.pop(index)
+            return {"answer": "User deleted"}
+    return {"answer": "User not found"}
+
+
+
 @app.on_event('startup')
 def startUp():
     print('Iniciando server')
