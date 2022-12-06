@@ -20,15 +20,14 @@ def getUsers(db: Session = Depends(getDb)):
 @router.post('/')
 def userCreate(user:User, db: Session = Depends(getDb)):
     user = user.dict()
-    #users.append(user)
     newUser = models.User(
-        userName = user['userName'],
-        password = user['password'],
-        name = user['name'],
-        lastName = user['lastName'],
-        address = user['address'],
-        telephone = user['telephone'],
-        email = user['email'],
+        userName = user["userName"],
+        password = user["password"],
+        name = user["name"],
+        lastName = user["lastName"],
+        address = user["address"],
+        telephone = user["telephone"],
+        email = user["email"],
     )
     db.add(newUser)
     db.commit()
