@@ -17,11 +17,11 @@ class User(Base):
     email = Column(String, unique=True)
     creation = Column(DateTime,default=datetime.now,onupdate=datetime.now)
     status = Column(Boolean,default=False)
-    sale = relationship("sale",backref="user",cascade="delete,merge")
+    # sale = relationship("sale",backref="user",cascade="delete,merge")
 
-class Sale(Base):
-    __tablename__= "sale"
-    id = Column(Integer,primary_key=True,autoincrement=True)
-    userId = Column(Integer,ForeignKey("user.id",ondelete="CASCADE"))
-    sale = Column(Integer)
-    productSale = Column(Integer)
+# class Sale(Base):
+#     __tablename__= "sale"
+#     id = Column(Integer,primary_key=True,autoincrement=True)
+#     userId = Column(Integer,ForeignKey("user.id",ondelete="CASCADE"))
+#     sale = Column(Integer)
+#     productSale = Column(Integer)

@@ -9,7 +9,7 @@ createTables()
 
 app =  FastAPI(title='FastAPI Demo',
     description='Learn FastAPI',
-    version='1.0.0')
+    version='1.1.0')
 
 app.include_router(user_router.router)
 
