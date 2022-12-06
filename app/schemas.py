@@ -5,7 +5,8 @@ from datetime import datetime
 
 #User Model
 class User(BaseModel): #schemas
-    id: int
+    userName: str
+    password: str
     name: str
     lastName: str
     address: Optional[str]
