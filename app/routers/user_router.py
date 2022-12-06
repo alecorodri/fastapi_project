@@ -20,7 +20,9 @@ def getUsers(db: Session = Depends(getDb)):
 @router.post('/')
 def userCreate(user:User):
     user = user.dict()
-    users.append(user)
+    #users.append(user)
+
+    
     return {"answer" : "User created"}
 
 @router.post('/{user_id}')
