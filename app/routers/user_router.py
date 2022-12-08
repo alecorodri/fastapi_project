@@ -44,3 +44,4 @@ def deleteUser(user_id:int, db: Session = Depends(getDb)):
 @router.patch('/{user_id}')
 def updateUser(user_id: int, update_user: UpdateUser, db: Session = Depends(getDb)):
     res = user.updateUser(user_id,updateUser,db)
+    return res
