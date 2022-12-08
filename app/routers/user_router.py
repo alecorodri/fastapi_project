@@ -4,13 +4,13 @@ from app.schemas import User, UserId, ShowUser
 from app.db.db import getDb
 from sqlalchemy.orm import Session
 from app.db import models
-
+from typing import List
 router = APIRouter(
     prefix= "/user",
     tags=["Users"]
 )
 
-@router.get('/')
+@router.get('/',response_model=List[ShowUser])
 def getUsers(db: Session = Depends(getDb)):
     users = db.query(models.User).all()
     return users
