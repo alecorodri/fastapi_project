@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter,Depends
 from app.schemas import User, UserId
 from app.db.db import getDb
@@ -34,12 +35,12 @@ def userCreate(user:User, db: Session = Depends(getDb)):
     db.refresh(newUser)
     return {"answer" : "User created"}
 
-@router.post('/{user_id}')
-def getUsers(user_id:int):
-    for user in users:
-        if user["id"] == user_id:
-            return {"user": user}
-    return {"answer": "User not found"}
+@router.get('/{user_id}')
+def getUser(user_id:int, db: Session = Depends(getDb)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        return {"answer": "User not found"}
+    return user
 
 
 @router.post('/get_user')
