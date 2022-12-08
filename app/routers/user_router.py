@@ -38,12 +38,7 @@ def getUser2(user_id:UserId):
 
 @router.delete('/{user_id}')
 def deleteUser(user_id:int, db: Session = Depends(getDb)):
-    user = db.query(models.User).filter(models.User.id == user_id)
-    if not user.first():
-        return {"answer": "User not found"}
-    user.delete(synchronize_session= False)
-    db.commit()
-
+    user.deleteUser(user_id, db)
     return {"answer": "User deleted"}
 
 @router.patch('/{user_id}')

@@ -18,8 +18,15 @@ def userCreate(data, db: Session):
     db.refresh(newUser)
 
 
-def getUser(user_id,db: Session):
+def getUser(user_id, db: Session):
     data = db.query(models.User).filter(models.User.id == user_id).first()
     if not data:
         return {"answer": "User not found"}
     return data
+
+def deleteUser(user_id, db: Session):
+    user = db.query(models.User).filter(models.User.id == user_id)
+    if not user.first():
+        return {"answer": "User not found"}
+    user.delete(synchronize_session= False)
+    db.commit()
