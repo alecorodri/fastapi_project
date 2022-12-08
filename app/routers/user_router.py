@@ -5,6 +5,9 @@ from app.db.db import getDb
 from sqlalchemy.orm import Session
 from app.db import models
 from typing import List
+from app.repository import user
+
+
 router = APIRouter(
     prefix= "/user",
     tags=["Users"]
@@ -16,28 +19,14 @@ def getUsers(db: Session = Depends(getDb)):
     return users
 
 @router.post('/')
-def userCreate(user:User, db: Session = Depends(getDb)):
-    user = user.dict()
-    newUser = models.User(
-        userName = user["userName"],
-        password = user["password"],
-        name = user["name"],
-        lastName = user["lastName"],
-        address = user["address"],
-        telephone = user["telephone"],
-        email = user["email"],
-    )
-    db.add(newUser)
-    db.commit()
-    db.refresh(newUser)
+def userCreate(data :User, db: Session = Depends(getDb)):
+    user.userCreate(data, db)
     return {"answer" : "User created"}
 
 @router.get('/{user_id}',response_model=ShowUser)
 def getUser(user_id:int, db: Session = Depends(getDb)):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if not user:
-        return {"answer": "User not found"}
-    return user
+    data = user.getUser(user_id, db)
+    return data
 
 
 @router.post('/get_user')
