@@ -15,8 +15,8 @@ router = APIRouter(
 users = []
 @router.get('/',response_model=List[ShowUser])
 def getUsers(db: Session = Depends(getDb)):
-    users = db.query(models.User).all()
-    return users
+    data = user.getUsers(db)
+    return data
 
 @router.post('/')
 def userCreate(data :User, db: Session = Depends(getDb)):
@@ -38,8 +38,8 @@ def getUser2(user_id:UserId):
 
 @router.delete('/{user_id}')
 def deleteUser(user_id:int, db: Session = Depends(getDb)):
-    user.deleteUser(user_id, db)
-    return {"answer": "User deleted"}
+    res = user.deleteUser(user_id, db)
+    return res
 
 @router.patch('/{user_id}')
 def updateUser(user_id: int, update_user: UpdateUser, db: Session = Depends(getDb)):

@@ -30,3 +30,8 @@ def deleteUser(user_id, db: Session):
         return {"answer": "User not found"}
     user.delete(synchronize_session= False)
     db.commit()
+    return {"answer": "User deleted"}
+
+def getUsers(db: Session):
+    data = db.query(models.User).all()
+    return data
