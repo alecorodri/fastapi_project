@@ -34,4 +34,12 @@ def deleteUser(user_id, db: Session):
 
 def getUsers(db: Session):
     data = db.query(models.User).all()
-    return data
+    return 
+    
+def updateUser(user_id, update_user, db: Session):
+    user = db.query(models.User).filter(models.User.id == user_id)
+    if not user.first():
+        return {"answer": "User not found"}
+    user.update(update_user.dict(exclude_unset=True))
+    db.commit()
+    return {"answer": "User updated"}

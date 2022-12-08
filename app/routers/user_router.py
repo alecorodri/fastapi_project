@@ -43,9 +43,4 @@ def deleteUser(user_id:int, db: Session = Depends(getDb)):
 
 @router.patch('/{user_id}')
 def updateUser(user_id: int, update_user: UpdateUser, db: Session = Depends(getDb)):
-    user = db.query(models.User).filter(models.User.id == user_id)
-    if not user.first():
-        return {"answer": "User not found"}
-    user.update(update_user.dict(exclude_unset=True))
-    db.commit()
-    return {"answer": "User updated"}
+    res = user.updateUser(user_id,updateUser,db)
