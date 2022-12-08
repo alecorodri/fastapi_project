@@ -14,6 +14,16 @@ class User(BaseModel): #schemas
     email: str
     creation: datetime = datetime.now()
 
+class UpdateUser(BaseModel): #schemas
+    userName: str = None
+    password: str = None
+    name: str = None
+    lastName: str = None
+    address: str = None
+    telephone: int = None
+    email: str = None
+    
+
 class UserId(BaseModel):
     id: int
 

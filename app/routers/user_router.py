@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter,Depends
-from app.schemas import User, UserId, ShowUser
+from app.schemas import User, UserId, ShowUser, UpdateUser
 from app.db.db import getDb
 from sqlalchemy.orm import Session
 from app.db import models
@@ -9,7 +9,7 @@ router = APIRouter(
     prefix= "/user",
     tags=["Users"]
 )
-
+users = []
 @router.get('/',response_model=List[ShowUser])
 def getUsers(db: Session = Depends(getDb)):
     users = db.query(models.User).all()
@@ -57,14 +57,11 @@ def deleteUser(user_id:int, db: Session = Depends(getDb)):
 
     return {"answer": "User deleted"}
 
-@router.put('/{user_id}')
-def updateUser(user_id: int, update_user: User):
-    for index,user in enumerate(users):
-        if user["id"] == user_id:
-            users[index]["id"] = update_user.dict()["id"]
-            users[index]["name"] = update_user.dict()["name"]
-            users[index]["lastName"] = update_user.dict()["lastName"]
-            users[index]["address"] = update_user.dict()["address"]
-            users[index]["telephone"] = update_user.dict()["telephone"]
-            return {"answer": "User updated"}
-    return {"answer": "User not updated"}
+@router.patch('/{user_id}')
+def updateUser(user_id: int, update_user: UpdateUser, db: Session = Depends(getDb)):
+    user = db.query(models.User).filter(models.User.id == user_id)
+    if not user.first():
+        return {"answer": "User not found"}
+    user.update(update_user.dict(exclude_unset=True))
+    db.commit()
+    return {"answer": "User updated"}
