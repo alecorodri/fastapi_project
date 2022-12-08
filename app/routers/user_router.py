@@ -48,12 +48,14 @@ def getUser2(user_id:UserId):
     return {"answer": "User not found"}
 
 @router.delete('/{user_id}')
-def deleteUser(user_id:int):
-    for index,user in enumerate(users):
-        if user["id"] == user_id:
-            users.pop(index)
-            return {"answer": "User deleted"}
-    return {"answer": "User not found"}
+def deleteUser(user_id:int, db: Session = Depends(getDb)):
+    user = db.query(models.User).filter(models.User.id == user_id)
+    if not user.first():
+        return {"answer": "User not found"}
+    user.delete(synchronize_session= False)
+    db.commit()
+
+    return {"answer": "User deleted"}
 
 @router.put('/{user_id}')
 def updateUser(user_id: int, update_user: User):
