@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter,Depends
-from app.schemas import User, UserId
+from app.schemas import User, UserId, ShowUser
 from app.db.db import getDb
 from sqlalchemy.orm import Session
 from app.db import models
@@ -35,7 +35,7 @@ def userCreate(user:User, db: Session = Depends(getDb)):
     db.refresh(newUser)
     return {"answer" : "User created"}
 
-@router.get('/{user_id}')
+@router.get('/{user_id}',response_model=ShowUser)
 def getUser(user_id:int, db: Session = Depends(getDb)):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
